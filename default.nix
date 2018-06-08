@@ -13,6 +13,9 @@ self: super: with super; rec {
   terraform-full = terraform_0_11-full;
 
   consul = callPackage ./pkgs/consul {};
+  consulate = callPackage ./pkgs/consulate {};
+
+  dep2nix = callPackage ./pkgs/dep2nix {};
 
   elasticsearch = callPackage ./pkgs/elasticsearch { };
   elasticsearch2 = callPackage ./pkgs/elasticsearch/2.x.nix { };
