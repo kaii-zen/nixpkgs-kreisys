@@ -1,9 +1,11 @@
+{ pkgs, ... }:
 {
   users.extraUsers.kreisys = {
     createHome      = true;
     home            = "/home/kreisys";
     description     = "Shay Bergmann";
     extraGroups     = [ "wheel" ];
+    shell           = pkgs.fish;
     useDefaultShell = true;
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDzC4AeW6zvJ3AFRKWMATwrXbbU4V62EzO8lNPYXWpU8AgCbu6VZZB/LVIGC5p9yZd/AZpYTf84XrVnh5r1Vsur6y1UVJKStbR7xmPptyaI/h6O5eUpI+V5i7xCP/Kvw3eOwxxEpfHR4YIHRfD1V6LtpjGhlGe1LCq/Fszo1ihYWCa4RfRgorz2cPrKBKYGbJX0shgSMzG8e32ZRK11A59uQcL5G54FrB3uWu+n/mJIEpnT2f9v/ZBpCUmYH38gijVuJMI8xfzJsqM6hubgxTk1u2X/trt0KfzIuWG1qKJ9GuO18hxJKPPPOXe71sb96KvX99JbMTndr1XuRtDndqGP kreisys@github/6173530 # ssh-import-id gh:kreisys"
