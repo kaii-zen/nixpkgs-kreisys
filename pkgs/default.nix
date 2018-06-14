@@ -31,4 +31,6 @@ self: super: with super; rec {
   elasticsearchPlugins = recurseIntoAttrs (
     callPackage ./elasticsearch/plugins.nix { }
   );
+
+  nvim = callPackage ./nvim {};
 }
