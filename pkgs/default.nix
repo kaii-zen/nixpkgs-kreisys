@@ -12,6 +12,8 @@ self: super: with super; rec {
   terraform = terraform_0_11;
   terraform-full = terraform_0_11-full;
 
+  terraform-docs = callPackage ./terraform-docs {};
+
   inherit (callPackage ./fish {})
     iterm2-integration
     docker-completions
