@@ -1,3 +1,6 @@
 {
-  services.consul.enable = true;
+  services.consul = {
+    enable = true;
+    server = true;
+  };
 }

@@ -28,12 +28,27 @@ in with lib;
       '';
     };
 
-
     advertise_addr = mkOption {
       default = readFile (fetchurl http://169.254.169.254/2018-03-28/meta-data/local-ipv4);
       type = string;
       description = ''
         IP address to publish to nodes in the same datacenter.
+      '';
+    };
+
+    server = mkOption {
+      default = false;
+      type = bool;
+      description = ''
+        Be a server.
+      '';
+    };
+
+    ui = mkOption {
+      default = false;
+      type = bool;
+      description = ''
+        Serve web ui.
       '';
     };
   };
@@ -56,7 +71,7 @@ in with lib;
           #translate_wan_addrs = true;
           log_level = "INFO";
           protocol = 3;
-          inherit (cfg) services checks advertise_addr advertise_addr_wan;
+          inherit (cfg) services checks advertise_addr advertise_addr_wan server ui;
         };
       };
     };
