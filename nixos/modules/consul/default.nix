@@ -68,7 +68,7 @@ in with lib;
           datacenter = "us-east-1";
           acl_default_policy = "allow";
           enable_script_checks = true;
-          #translate_wan_addrs = true;
+          translate_wan_addrs = true;
           log_level = "INFO";
           protocol = 3;
           inherit (cfg) services checks advertise_addr advertise_addr_wan server ui;
