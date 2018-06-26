@@ -136,4 +136,19 @@ in {
       license = licenses.mit;
     };
   };
+
+  consul_discovery_es6 = esPlugin rec {
+    name = "elasticsearch-consul-discovery-${version}";
+    pluginName = "consul-discovery";
+    version = "6.2.4.0";
+    src = fetchurl {
+      url = "https://distfiles.compuscene.net/elasticsearch/${name}.zip";
+      sha256 = "078byy9vxjd5ik5zgpa0f5hqmib2v1l3kzvskmk1vk4a2yss4gsf";
+    };
+    meta = {
+      homepage = https://github.com/vvanholl/elasticsearch-consul-discovery;
+      description = "Consul based node discovery plugin for elasticsearch";
+      license = licenses.mit;
+    };
+  };
 }

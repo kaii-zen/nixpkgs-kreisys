@@ -29,11 +29,6 @@ variable "key_name" {
   type        = "string"
 }
 
-variable "cloudtrail_s3_bucket" {
-  description = "S3 bucket to use for Cloudtrail. See AWS docs for the required permissions"
-  type        = "string"
-}
-
 variable "s3_bucket" {
   description = "S3 bucket for uploading Nix expressions"
   type        = "string"
@@ -44,13 +39,17 @@ variable "nixexprs" {
   type        = "string"
 }
 
+variable "tags" {
+  default = []
+}
+
 module "this" {
-  source               = "github.com/kreisys/terraform-aws-ssm-nixos?ref=bd828334715df1813e7a80a85338b463538dae2e"
-  display_name         = "${var.display_name}"
-  nixos_release        = "18.03"
-  cloudtrail_s3_bucket = "${var.cloudtrail_s3_bucket}"
-  s3_bucket            = "${var.s3_bucket}"
-  nixexprs             = "${var.nixexprs}"
+  #source               = "github.com/kreisys/terraform-aws-ssm-nixos?ref=bd828334715df1813e7a80a85338b463538dae2e"
+  source        = "/Users/kreisys/src/anxt"
+  display_name  = "${var.display_name}"
+  nixos_release = "18.03"
+  s3_bucket     = "${var.s3_bucket}"
+  nixexprs      = "${var.nixexprs}"
 
   nix_channels = {
     nixos-unstable = "http://nixos.org/channels/nixos-unstable"
@@ -89,7 +88,7 @@ resource "aws_autoscaling_group" "this" {
   min_size             = "${var.count}"
   max_size             = "${var.count}"
   desired_capacity     = "${var.count}"
-  tags                 = ["${module.this.tags}"]
+  tags                 = ["${concat(module.this.tags, var.tags)}"]
 
   lifecycle {
     create_before_destroy = true

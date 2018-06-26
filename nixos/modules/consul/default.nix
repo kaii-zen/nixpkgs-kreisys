@@ -21,19 +21,32 @@ in with lib;
     };
 
     advertise_addr_wan = mkOption {
-      default = readFile (fetchurl http://169.254.169.254/2018-03-28/meta-data/public-ipv4);
-      type = string;
+      default = null;
+      type = nullOr string;
       description = ''
         IP address to publish to federated nodes.
       '';
     };
 
     advertise_addr = mkOption {
-      default = readFile (fetchurl http://169.254.169.254/2018-03-28/meta-data/local-ipv4);
+      default = ''{{ GetInterfaceIP "eth0" }}'';
       type = string;
       description = ''
         IP address to publish to nodes in the same datacenter.
       '';
+    };
+
+    translate_wan_addrs = mkOption {
+      default = true;
+      type = bool;
+      description = ''
+        If set to true, Consul will prefer a node's configured WAN address when servicing DNS and HTTP requests for a node in a remote datacenter. This allows the node to be reached within its own datacenter using its local address, and reached from other datacenters using its WAN address, which is useful in hybrid setups with mixed networks. This is enabled by default.
+      '';
+    };
+
+    datacenter = mkOption {
+      default = "us-east-1";
+      type = string;
     };
 
     server = mkOption {
@@ -63,16 +76,16 @@ in with lib;
       };
 
       consul = {
-        extraConfig = with builtins; {
-          retry_join = ["provider=aws tag_key=Consul tag_value=Legacy"];
-          datacenter = "us-east-1";
+        extraConfig = with builtins; mkMerge [{
+          retry_join = ["provider=aws tag_key=consul:dc tag_value=${cfg.datacenter}"];
           acl_default_policy = "allow";
           enable_script_checks = true;
-          translate_wan_addrs = true;
           log_level = "INFO";
           protocol = 3;
-          inherit (cfg) services checks advertise_addr advertise_addr_wan server ui;
-        };
+          inherit (cfg) services checks datacenter advertise_addr translate_wan_addrs server ui;
+        } (optionalAttrs (cfg.advertise_addr_wan != null) {
+          inherit (cfg) advertise_addr_wan;
+        })];
       };
     };
   };

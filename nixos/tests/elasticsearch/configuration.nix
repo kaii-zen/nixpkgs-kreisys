@@ -1,4 +1,5 @@
 {
+  services.elasticsearch.enable = true;
   services.consul = {
     enable = true;
     server = true;
