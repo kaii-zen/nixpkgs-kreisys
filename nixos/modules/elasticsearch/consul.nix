@@ -9,7 +9,7 @@ in with lib; {
   config = mkIf (esCfg.enable && consulCfg.enable) {
 
     services.elasticsearch = {
-      plugins = [ pkgs.elasticsearchPlugins.consul_discovery_es6 ];
+      plugins = with pkgs.elasticsearchPlugins; with esCfg; [ (if version == 5 then consul_discovery else if version == 6 then consul_discovery_es6 else abort) ];
       discovery = {
         zen.hosts_provider = "consul";
         consul = {

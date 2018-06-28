@@ -4,7 +4,7 @@ let inherit (import <nixpkgs> {}) runCommand; in
 [(module "test" {
   source = ../.;
   display_name = "Elasticsearch Test";
-  count = 3;
+  count = 1;
   instance_type = "m4.large";
   tags = [{
     key = "consul:dc";
