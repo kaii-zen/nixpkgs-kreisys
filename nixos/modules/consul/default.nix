@@ -69,6 +69,17 @@ in with lib;
   config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [ 8300 8301 8302 ];
 
+    systemd.services.consul-alerts.serviceConfig.ExecStart = lib.mkIf cfg.alerts.enable (lib.mkForce ''
+      ${cfg.alerts.package.bin}/bin/consul-alerts start \
+        ${optionalString cfg.alerts.watchChecks "--watch-checks"} \
+        ${optionalString cfg.alerts.watchEvents "--watch-events"} \
+        --log-level=warn \
+        --alert-addr=${cfg.alerts.listenAddr} \
+        --consul-addr=${cfg.alerts.consulAddr} \
+        --consul-dc=${cfg.datacenter} \
+        --consul-acl-token=""
+    '');
+
     services = {
       dnsmasq = {
         enable = true;
