@@ -6,6 +6,8 @@ in lib.mkIf (consul.enable && zerotierone.enable) {
     services.consul-zerotier-id = {
       description = "Publish Zerotier node id to Consul node metadata";
       wantedBy    = [ "multi-user.target" ];
+      requires    = [ "consul.service" "zerotierone.service" ];
+      after       = [ "consul.service" "zerotierone.service" ];
       path        = [ config.services.consul.package ];
 
       script      = ''
