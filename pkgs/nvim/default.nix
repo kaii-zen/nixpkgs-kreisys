@@ -179,6 +179,11 @@ let
     map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
   '';
 
+  vimrcEasyAlignConfig = ''
+    " Align GitHub-flavored Markdown tables
+    au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
+  '';
+
   vimrc = ''
     ${vimrcGeneralConfig}
     ${vimrcAirlineConfig}
@@ -188,6 +193,7 @@ let
     ${vimrcTerraformConfig}
     ${vimrcDeviconsConfig}
     ${vimrcGoyoAndLimelightConfig}
+    ${vimrcEasyAlignConfig}
   '';
     #${vimrcJavascriptConfig}
     #${vimrcALEConfig}
@@ -208,6 +214,7 @@ let
     ale
     auto-pairs
     deoplete-nvim
+    easy-align
     editorconfig-vim
     fugitive
     gitgutter
