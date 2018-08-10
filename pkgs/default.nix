@@ -22,6 +22,7 @@ self: super: with super; rec {
 
   consul = callPackage ./consul {};
   consulate = callPackage ./consulate {};
+  into-ledger = callPackage ./into-ledger {};
 
   dep2nix = callPackage ./dep2nix {};
 
