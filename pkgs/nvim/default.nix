@@ -52,6 +52,9 @@ let
     let g:mapleader=','
     " Enable syntax highlighting
     syntax on
+    " Allow per-project .vimrc
+    set exrc
+    set secure
     " Use macOS clipboard
     set clipboard=unnamed
     " Set color scheme
@@ -90,6 +93,7 @@ let
 
   vimrcDeopleteConfig = ''
     let g:deoplete#enable_at_startup = 1
+    let g:deoplete#num_processes = 1
     inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
   '';
 
@@ -152,6 +156,10 @@ let
     \   'javascript': ['eslint'],
     \}
 
+    "let g:ale_fixers = {
+    "\   'haskell': ['cabal_ghc'],
+    "\}
+
     " Set this setting in vimrc if you want to fix files automatically on save.
     " This is off by default.
     let g:ale_fix_on_save = 1
@@ -194,16 +202,18 @@ let
     ${vimrcDeviconsConfig}
     ${vimrcGoyoAndLimelightConfig}
     ${vimrcEasyAlignConfig}
+    ${vimrcALEConfig}
   '';
     #${vimrcJavascriptConfig}
-    #${vimrcALEConfig}
 
   languagePlugins = [
     coffee-script
+    haskell-vim
     vim-go
     vim-hashicorp-tools
     vim-javascript
     vim-json
+    vim-ledger
     vim-markdown
     vim-nix
     vim-fish
@@ -226,7 +236,6 @@ let
     surround
     tabular
     vim-airline
-    vim-dashboard
     vim-indent-guides
   ];
 
